@@ -1,3 +1,4 @@
 .idea
 /service-product/service-product.exe
 /service-product/config.yml
+/auth/auth.exe
