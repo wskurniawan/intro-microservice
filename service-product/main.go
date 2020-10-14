@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/viper"
 	"github.com/wskurniawan/intro-microservice/service-product/config"
 	"github.com/wskurniawan/intro-microservice/service-product/handler"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 )
@@ -16,6 +18,8 @@ func main() {
 		log.Panic(err)
 		return
 	}
+
+	db, err := initDB(cfg.Database)
 
 	router := mux.NewRouter()
 
@@ -41,4 +45,14 @@ func getConfig() (config.Config, error) {
 	}
 
 	return cfg, nil
+}
+
+func initDB(dbConfig config.Database) (*gorm.DB, error) {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.Config)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
 }
