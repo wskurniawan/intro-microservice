@@ -24,3 +24,7 @@ func ValidateAuth(w http.ResponseWriter, r *http.Request) {
 
 	utils.WrapAPISuccess(w, r, "success", 200)
 }
+
+//TODO SIGNUP - Buat generate token disimpen ke database
+
+//TODO LOGIN - Buat dapetin token
