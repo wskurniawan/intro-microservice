@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"github.com/wskurniawan/intro-microservice/auth/database"
+	"github.com/wskurniawan/intro-microservice/auth/nsq"
 	"github.com/wskurniawan/intro-microservice/auth/utils"
 	"gorm.io/gorm"
 	"io/ioutil"
@@ -79,11 +80,14 @@ func (db *Auth) Login (w http.ResponseWriter, r *http.Request){
 
 	var login database.Auth
 
+
+
 	err = json.Unmarshal(body, &login)
 	if err != nil {
 		utils.WrapAPIError(w, r, "error unmarshal : "+err.Error(), http.StatusInternalServerError)
 		return
 	}
+	nsq.SendEmail(login)
 
 	res,err := login.Login(db.Db);if err != nil {
 		utils.WrapAPIError(w, r, "error unmarshal : "+err.Error(), http.StatusInternalServerError)

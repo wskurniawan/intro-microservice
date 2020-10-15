@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/google/uuid v1.1.2
 	github.com/gorilla/mux v1.8.0
+	github.com/nsqio/go-nsq v1.0.8
 	github.com/pkg/errors v0.8.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.7.1
